@@ -1,0 +1,10 @@
+#define __UNIX_PUTC=1
+#include <builtins.h>
+#define alloca(__x) __ALLOCA(__x)
+void __posix_exit(int __status);
+char __fpurge() {return 0;};
+char __freadahead() {return 0;};
+char __freading() {return 0;};
+/* char freading() {return 0;}; */
+char __fseterr() {return 0;};
+#define exit(__p1) __posix_exit(__p1)
