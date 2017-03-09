@@ -400,9 +400,9 @@ $!	configure must be newer than m4 files
 $!
 $	if f$search("''diskn'[]configure.") .nes. ""
 $	then
-$!	    wait 00:00:01
-$!	    copy 'diskn'[]configure. 'base_disk'[]
-$!	    purge 'base_disk'[]configure.
+$	    wait 00:00:02
+$	    copy 'diskn'[]configure. 'base_disk'[]
+$	    purge 'base_disk'[]configure.
 $	endif
 $!
 $	if f$search("''diskn'[.tests]basic.") .nes. ""
