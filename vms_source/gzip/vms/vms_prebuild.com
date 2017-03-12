@@ -20,6 +20,7 @@ $ delim = f$extract(f$length(defdir) -1, 1, defdir)
 $ define decc$user_include 'defdir_base'.vms'delim'
 $ my_dir = f$parse(defdir,,, "DIRECTORY")
 $ my_dir_name = my_dir - "[" - "]" - "<" - ">"
+$ set proc/parse=extended
 $!
 $ if p1 .eqs. "DEBUG"
 $ then
@@ -413,9 +414,9 @@ $!	configure must be newer than m4 files
 $!
 $	if f$search("''diskn'[]configure.") .nes. ""
 $	then
-$!	    wait 00:00:02
-$!	    copy 'diskn'[]configure. 'base_disk'[]
-$!	    purge 'base_disk'[]configure.
+$	    wait 00:00:02
+$	    copy 'diskn'[]configure. 'base_disk'[]
+$	    purge 'base_disk'[]configure.
 $	endif
 $!
 $	if f$search("''diskn'[.tests]basic.") .nes. ""
@@ -427,7 +428,7 @@ $	endif
 $!
 $!
 $	i = i + 1
-$!	goto copy_loop
+$	goto copy_loop
 $copy_loop_end:
 $   endif
 $ endif
