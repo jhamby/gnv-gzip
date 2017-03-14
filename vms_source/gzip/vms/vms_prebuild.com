@@ -154,7 +154,7 @@ $ unix_to_vms = "/comm=sys$disk:[.vms]unix_c_to_vms_c.tpu"
 $!
 $ define/user sys$output NLA0:
 $ define/user sys$output NLA0:
-$ search []tailor.h "__VMS"
+$ search []tailor.h "VMSOLD"
 $ severity = '$SEVERITY'
 $ if severity .ne. 1
 $ then
@@ -352,6 +352,13 @@ $	then
 $	    wait 00:00:01
 $	    copy 'diskn'[.lib]config.hin 'base_disk'[.lib]
 $	    purge 'base_disk'[.lib]config.hin
+$	endif
+$!
+$	if f$search("''diskn'[.doc]gzip.info") .nes. ""
+$	then
+$	    wait 00:00:01
+$	    copy 'diskn'[.doc]gzip.info 'base_disk'[.doc]
+$	    purge 'base_disk'[.doc]gzip.info
 $	endif
 $!
 $	if f$search("''diskn'[]makefile.am") .nes. ""
