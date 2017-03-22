@@ -1,6 +1,9 @@
 #pragma message disable questcompare
 #pragma message disable questcompare1
+#pragma message disable maylosedata3
 
+#define optarg hide_optarg
+#define getopt hide_getopt
 #include <vms_fake_path/stdio.h>
 
 static size_t vms_freadahead( FILE * stream) { return 0; }
@@ -20,7 +23,7 @@ static void __fseterr(FILE * fp) {
 /* Simple getrlimit_hack */
 #include "vms_getrlimit_hack.h"
 
-void vms_expand_args(int *old_argc, char **argv);
+void vms_expand_args(int *old_argc, char **argv_ptr[]);
 
 #define PATH_SEP ']'
 #define PATH_SEP2 ':'
@@ -32,6 +35,8 @@ void vms_expand_args(int *old_argc, char **argv);
 #define casemap(c) tolow(c)
 #define OS_CODE  0x02
 #define OPTIONS_VAR "GZIP_OPT"
-#define EXPAND(argc,argv) vms_expand_args(&argc, argv);
+#define EXPAND(argc, argv) vms_expand_args(&argc, &argv);
 /* #include <file.h> */
 
+#undef optarg
+#undef getopt

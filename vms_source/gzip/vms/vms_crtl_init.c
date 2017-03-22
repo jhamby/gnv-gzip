@@ -71,6 +71,7 @@
  2-003	J. Malmberg	Add DECC$FILENAME_UNIX_NOVERSION as version numbers
 			will usually mess up ported programs.
 
+ 2-004	J. Malmberg	Need to compile with 64 bit pointers set.
 */
 
 #include <stdio.h>
@@ -95,6 +96,10 @@ struct itmlst_3 {
 };
 #pragma message restore
 #pragma member_alignment restore
+
+#if __INITIAL_POINTER_SIZE
+#pragma pointer_size 32
+#endif
 
 #ifdef __VAX
 #define ENABLE "ENABLE"

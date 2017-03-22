@@ -14,6 +14,7 @@ $ cname = "/names=(as_is,short)/main=posix_exit"
 $ cfloat = "/float=IEEE/IEEE_MODE=DENORM_RESULTS"
 $ cinc = "/nested=NONE"
 $ cc :== cc'cstand''caccept''clist''cname''cfloat''cinc''prefix'/debug
+$ cc :== 'cc'/pointer_size=long=argv
 $ defdir = f$environment("default")
 $ defdir_base = defdir - "]" - ">"
 $ delim = f$extract(f$length(defdir) -1, 1, defdir)
@@ -296,7 +297,10 @@ $ vms_cache = "sys$disk:[.vms]config.cache_''vmstag'"
 $ write sys$output "looking for ''vms_cache' file."
 $ if f$search(vms_cache) .nes. ""
 $ then
-$   copy 'vms_cache' sys$disk:[]config.cache
+$   if f$search("sys$disk:[]config.cache") .eqs. ""
+$   then
+$       copy/log 'vms_cache' sys$disk:[]config.cache
+$   endif
 $ endif
 $!
 $!

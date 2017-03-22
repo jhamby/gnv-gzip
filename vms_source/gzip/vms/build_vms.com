@@ -51,7 +51,7 @@ $! Run the prebuild procedure if any
 $!----------------------------------
 $ set nover
 $ file = "sys$disk:[.vms]vms_prebuild.com"
-$ if f$search(file) .nes. "" then @'file'
+$ if f$search(file) .nes. "" then @'file' "''p1'"
 $!
 $!
 $! Run a build procedure if needed and exists
@@ -70,7 +70,10 @@ $       configure_vms_template = "sys$disk:[]vms_configure.sh"
 $       if f$search(configure_vms_template) .nes. ""
 $       then
 $!
-$           bash ./vms_configure.sh
+$           if f$search("sys$disk:[...]config.h") .eqs. ""
+$           then
+$               bash ./vms_configure.sh
+$           endif
 $!
 $!          Configure tends to leave a mess behind.
 $!          ---------------------------------------
