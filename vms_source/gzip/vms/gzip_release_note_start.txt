@@ -142,6 +142,13 @@ still may be corner cases that fail.
 
 This kit is designed to be used with the GNV Bash 4.2.45 or later kit.
 
+Known GNV tickets affecting Gzip:
+
+Ticket #        Title
+--------        ---------------------------------------------------------------
+ 121            zgrep fails to run, looks like bash redirection issues
+
+
 Fixes and enhancements in the Gzip 1.7 kit.
 
 TBD
@@ -154,8 +161,8 @@ GNV$ prefix has been registered with HP for this purpose.
 OpenVMS specific building and kitting instructions are after the standard
 bash readme file below.
 
-The source kits contains files for building Gzip using MMK.
-MMK 4.0 was used for this build on Alpha and Itanium Itanium.
+The source kits contains files for building Gzip using the updated GNV
+components.
 
 Acknowledgements:
 

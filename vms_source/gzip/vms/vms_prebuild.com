@@ -43,6 +43,14 @@ $   cc/object=sys$disk:[]vms_crtl_init.obj -
         [.vms]vms_crtl_init.c
 $ endif
 $!
+$! Special argv[0] hack + MBX eof hack
+$ if f$search("vms_main_wrapper.obj") .eqs. ""
+$ then
+$   cc/nested=none/define=("NEED_PIPE_EOF")-
+        /object=sys$disk:[]vms_main_wrapper.obj -
+        [.vms]vms_main_wrapper.c
+$ endif
+$!
 $! Special wildcard init hack
 $! File was found with name vms_expand_args.h
 $ if f$search("vms_expand_args.obj") .eqs. ""
@@ -235,6 +243,9 @@ $   write cfg_out "export gl_cv_func_working_mkstemp=yes"
 $   write cfg_out "export gl_cv_func_getcwd_path_max=no"
 $   write cfg_out "export gl_cv_func_working_utimes=yes"
 $   write cfg_out "export gl_cv_func_fflush_stdin=yes"
+$   write cfg_out "export gl_cv_func_fflush_stdin=yes"
+$   write cfg_out "export ac_cv_sys_pending_output_n_bytes=" + -
+       "'(*fp) ? (*fp)->_ptr - (*fp)->_base : 0'"
 $!
 $! The assumption here is that there may local files with the same
 $! name as system header files.  For VMS, configure tests fail for these

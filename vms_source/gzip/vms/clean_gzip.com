@@ -31,9 +31,16 @@ $ if f$search(file) .nes. "" then delete 'file';*
 $!
 $ file = "[.CXX_REPOSITORY]CXX$DEMANGLER_DB."
 $ if f$search(file) .nes. "" then delete 'file';*
+$ file = "CXX_REPOSITORY.DIR"
+$ if f$search(file) .nes. "" then set file/prot=(o:rwed) 'file';*
+$ if f$search(file) .nes. "" then delete 'file';*
 $!
 $ file = "[.LIB.CXX_REPOSITORY]CXX$DEMANGLER_DB."
 $ if f$search(file) .nes. "" then delete 'file';*
+$ file = "[.LIB]CXX_REPOSITORY.dir"
+$ if f$search(file) .nes. "" then set file/prot=(o:rwed) 'file';*
+$ if f$search(file) .nes. "" then delete 'file';*
+$!
 $!
 $ if p1_up .eqs. "REALCLEAN"
 $ then

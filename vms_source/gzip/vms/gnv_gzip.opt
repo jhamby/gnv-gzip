@@ -1,2 +1,3 @@
+sys$disk:[]vms_main_wrapper.obj
 sys$disk:[]vms_expand_args.obj
 sys$disk:[]vms_crtl_init.obj
