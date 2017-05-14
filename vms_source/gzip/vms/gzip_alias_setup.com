@@ -42,7 +42,6 @@ $ usr_bin = product_name
 $!
 $! Temp workaround for GNV ticket 122
 $ call do_alias "gzip" "[bin]" "[usr.bin]gnv$gzip.exe"
-$ call do_alias "gzip.exe" "[bin]" "[usr.bin]gnv$gzip.exe"
 $!
 $ list = usr_bin
 $ target_dir = "[usr.bin]"
@@ -98,13 +97,10 @@ $   if f$search(alias) .eqs. ""
 $   then
 $       set file/enter='alias' 'file'
 $   endif
-$   if p3 .eqs. ""
+$   alias1 = alias + "exe"
+$   if f$search(alias1) .eqs. ""
 $   then
-$       alias1 = alias + "exe"
-$       if f$search(alias1) .eqs. ""
-$       then
-$           set file/enter='alias1' 'file'
-$       endif
+$       set file/enter='alias1' 'file'
 $   endif
 $ endif
 $ exit
