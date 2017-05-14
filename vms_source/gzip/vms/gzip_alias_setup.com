@@ -41,15 +41,7 @@ $!
 $ usr_bin = product_name
 $!
 $! Temp workaround for GNV ticket 122
-$ list = "gzip"
-$ if mode .eqs. "install"
-$ then
-$   set file/enter=gnv$gnu:[bin]gzip. gnv$gnu:[usr.bin]gnv$gzip.exe
-$   set file/enter=gnv$gnu:[bin]gzip.exe gnv$gnu:[usr.bin]gnv$gzip.exe
-$ else
-$   call remove_alias [usr.bin] gzip gnv$gnu:[bin]gzip.
-$   call remove_alias [usr.bin] gzip gnv$gnu:[bin]gzip.exe
-$ endif
+$ call do_alias "gzip" "[bin]" "[usr.bin]gnv$gzip.exe"
 $!
 $ list = usr_bin
 $ target_dir = "[usr.bin]"
@@ -91,7 +83,12 @@ $ if p3 .eqs. ""
 $ then
 $   file = "gnv$gnu:''p2''prefix'$''p1'.EXE"
 $ else
-$   file = "gnv$gnu:''p2'''p3'."
+$   if f$locate("[", p3) .lt. f$length(p3)
+$   then
+$       file = "gnv$gnu:''p3'"
+$   else
+$       file = "gnv$gnu:''p2'''p3'"
+$   endif
 $ endif
 $ alias = "gnv$gnu:''p2'''p1'."
 $ if f$search(file) .nes. ""
@@ -113,14 +110,19 @@ $ exit
 $ENDSUBROUTINE ! add_alias
 $!
 $remove_alias: subroutine
-$ file = "gnv$gnu:''p2'''prefix'$''p1'.EXE"
-$ file_fid = "No_file_fid"
 $ if p3 .eqs. ""
 $ then
-$    alias = "gnv$gnu:''p2'''p1'."
+$   file = "gnv$gnu:''p2''prefix'$''p1'.EXE"
 $ else
-$    alias = p3
+$   if f$locate("[", p3) .lt. f$length(p3)
+$   then
+$       file = "gnv$gnu:''p3'"
+$   else
+$       file = "gnv$gnu:''p2'''p3'"
+$   endif
 $ endif
+$ file_fid = "No_file_fid"
+$ alias = "gnv$gnu:''p2'''p1'."
 $ if f$search(file) .nes. ""
 $ then
 $   fid = f$file_attributes(file, "FID")
