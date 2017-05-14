@@ -16,6 +16,7 @@
  *   * Remove memory leaks
  *   * Long filename support.
  *   * Make argv usage more clear.
+ *   * Enable DECC$FILE_SHARING needed for gzip 1.7
  */
 
 /* Gnu projects now include header files with the same name as
@@ -26,6 +27,7 @@
 #include <vms_fake_path/stdlib.h>
 #include <vms_fake_path/stdio.h>
 #include <vms_fake_path/string.h>
+#include <vms_fake_path/unixlib.h>
 
 #include <vms_fake_path/stsdef.h>
 #include <vms_fake_path/libfildef.h>
@@ -102,7 +104,7 @@ void vms_expand_args(old_argc, argv_ptr)
     char    **argv;
 
     argv = argv_ptr[0];
-
+    decc$feature_set("DECC$FILE_SHARING", __FEATURE_MODE_CURVAL, 1);
     vms_argv = malloc((max_files + 1) * sizeof(char*));
 
     vms_argv[new_argc++] = *argv;

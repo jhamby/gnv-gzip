@@ -40,9 +40,16 @@ $ endif
 $!
 $ usr_bin = product_name
 $!
-$! list = bin_files
-$! prefix = "[bin]"
-$! gosub aliases_list
+$! Temp workaround for GNV ticket 122
+$ list = "gzip"
+$ if mode .eqs. "install"
+$ then
+$   set file/enter=gnv$gnu:[bin]gzip. gnv$gnu:[usr.bin]gnv$gzip.exe
+$   set file/enter=gnv$gnu:[bin]gzip.exe gnv$gnu:[usr.bin]gnv$gzip.exe
+$ else
+$   call remove_alias [usr.bin] gzip gnv$gnu:[bin]gzip.
+$   call remove_alias [usr.bin] gzip gnv$gnu:[bin]gzip.exe
+$ endif
 $!
 $ list = usr_bin
 $ target_dir = "[usr.bin]"
@@ -108,7 +115,12 @@ $!
 $remove_alias: subroutine
 $ file = "gnv$gnu:''p2'''prefix'$''p1'.EXE"
 $ file_fid = "No_file_fid"
-$ alias = "gnv$gnu:''p2'''p1'."
+$ if p3 .eqs. ""
+$ then
+$    alias = "gnv$gnu:''p2'''p1'."
+$ else
+$    alias = p3
+$ endif
 $ if f$search(file) .nes. ""
 $ then
 $   fid = f$file_attributes(file, "FID")

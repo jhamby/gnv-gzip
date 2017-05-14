@@ -40,7 +40,6 @@ static void __fseterr(FILE * fp) {
 
 void vms_expand_args(int *old_argc, char **argv_ptr[]);
 
-#define NO_MULTIPLE_DOTS
 #define NO_SIZE_CHECK
 #define RECORD_IO 1
 #define casemap(c) tolow(c)
@@ -112,22 +111,29 @@ static const char * vms_z_suffix(void) {
 
 #define Z_SUFFIX vms_z_suffix()
 
+static const char * vms_part_sep() {
+    if (is_gnv()) {
+        return ".";
+    } else {
+        return "-";
+    }
+}
 
-#define NO_MULTIPLE_DOTS
-/*   implies PART_SEP = "-" instead of "." */
-/*   needs gzip patch for that! */
-/*   skips "." on -S suffix.  (Hide in expand vars? */
-/*   gzip.c/open_input file: */
-/*      declares char * dot; */
-/*      finds dot in filename or adds a traiing dot. */
-/*      If suffix has a dot, skip the dot. */
-/*      if *dot != '.' append a dot.  should be a noop */
-/*      calls open_and_stat to check name. */
-/*         Calls lstat() only if platform has lstat() */
-/*         Calls openat() for the file. *./
-/*      if *dot != '.' append a dot.  should be a noop */
-/*   gzip.c/make_ofname */
-/*      check for null suffix, and force a traiing dot. */
+#define PART_SEP vms_part_sep()
+
+static const char vms_test_multiple_dots() {
+   if (is_gnv()) {
+       return 0;
+   } else {
+       return 1;
+   }
+}
+
+/* Need a #define MAKE_LEGAL_NAME make_simple_name() */
+
+#define TEST_MULTIPLE_DOTS vms_test_multiple_dots()
+
+#define NO_MULTIPLE_DOTS 1
 
 static char * vms_getenv(const char * env_name) {
     char * name;

@@ -222,6 +222,17 @@ $   'eve_silent' 'unix_to_vms' sys$disk:[.lib]vasnprintf.c -
 $ endif
 $!
 $!
+$ define/user sys$output NLA0:
+$ define/user sys$output NLA0:
+$ search []gzip.c "TEST_MULTIPLE_DOTS"
+$ severity = '$SEVERITY'
+$ if severity .ne. 1
+$ then
+$   'eve_silent' 'unix_to_vms' sys$disk:[]gzip.c -
+      /out=sys$disk:[]gzip.c/init=sys$disk:[.vms]gzip_c.tpu
+$ endif
+$!
+$!
 $! Need to build a script to run configure
 $!
 $ vms_cfg_script = "sys$disk:[]vms_configure.sh"
