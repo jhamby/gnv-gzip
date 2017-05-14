@@ -42,6 +42,7 @@ $ usr_bin = product_name
 $!
 $! Temp workaround for GNV ticket 122
 $ call do_alias "gzip" "[bin]" "[usr.bin]gnv$gzip.exe"
+$ call do_alias "gzip.exe" "[bin]" "[usr.bin]gnv$gzip.exe"
 $!
 $ list = usr_bin
 $ target_dir = "[usr.bin]"
@@ -59,7 +60,7 @@ $alias_list_loop:
 $   name = f$element(i, ",", list)
 $   if name .eqs. "" then goto alias_list_loop_end
 $   if name .eqs. "," then goto alias_list_loop_end
-$   call do_alias "''name'" "''target_dir'" "''name'"
+$   call do_alias "''name'" "''target_dir'"
 $   i = i + 1
 $   goto alias_list_loop
 $alias_list_loop_end:
@@ -81,7 +82,7 @@ $! P1 is the filename, p2 is the target directory
 $add_alias: subroutine
 $ if p3 .eqs. ""
 $ then
-$   file = "gnv$gnu:''p2''prefix'$''p1'.EXE"
+$   file = "gnv$gnu:''p2'''prefix'$''p1'.exe"
 $ else
 $   if f$locate("[", p3) .lt. f$length(p3)
 $   then
@@ -112,7 +113,7 @@ $!
 $remove_alias: subroutine
 $ if p3 .eqs. ""
 $ then
-$   file = "gnv$gnu:''p2''prefix'$''p1'.EXE"
+$   file = "gnv$gnu:''p2'''prefix'$''p1'.exe"
 $ else
 $   if f$locate("[", p3) .lt. f$length(p3)
 $   then
